@@ -39,13 +39,21 @@ html, body { width:100%; height:100%; overflow:hidden; background:var(--bg); fon
 .page.exit-up { opacity:0; transform:translateY(-60px); }
 .page.exit-down { opacity:0; transform:translateY(60px); }
 
-/* NAV DOTS */
-#dots { position:fixed; right:2rem; top:50%; transform:translateY(-50%); z-index:100;
-  display:flex; flex-direction:column; gap:12px; }
-.dot { width:6px; height:6px; border-radius:50%; background:rgba(200,164,90,0.2);
-  border:1px solid rgba(200,164,90,0.3); cursor:none; transition:all .3s; }
-.dot.on { background:var(--s); border-color:var(--s); box-shadow:0 0 8px rgba(200,164,90,0.4); }
-.dot:hover { background:rgba(200,164,90,0.5); }
+/* TOP NAVBAR */
+#topnav { position:fixed; top:0; left:0; right:0; z-index:100;
+  display:flex; align-items:center; justify-content:center;
+  padding:.9rem 2rem; gap:0;
+  background:linear-gradient(to bottom,rgba(6,4,2,0.9),transparent);
+  border-bottom:1px solid rgba(200,164,90,0.06); }
+.tnav { font-family:'Cinzel',serif; font-size:9px; letter-spacing:.25em; color:var(--mu);
+  text-transform:uppercase; cursor:none; padding:.5rem 1.4rem; position:relative;
+  transition:color .3s; white-space:nowrap; }
+.tnav::after { content:''; position:absolute; bottom:0; left:50%; right:50%;
+  height:1px; background:var(--s); transition:left .35s ease, right .35s ease; }
+.tnav:hover { color:rgba(200,164,90,.6); }
+.tnav.on { color:var(--s); }
+.tnav.on::after { left:10%; right:10%; }
+.tnav-sep { width:1px; height:10px; background:rgba(200,164,90,.1); flex-shrink:0; }
 
 /* NAV ARROWS */
 .nav-arrow { position:fixed; left:50%; transform:translateX(-50%); z-index:100;
@@ -57,7 +65,7 @@ html, body { width:100%; height:100%; overflow:hidden; background:var(--bg); fon
 .nav-arrow .arr { width:1px; height:30px; background:linear-gradient(to bottom,var(--s),transparent); }
 #nav-up .arr { background:linear-gradient(to top,var(--s),transparent); }
 
-/* PAGE COUNTER */
+/* PAGE INDICATOR */
 #pgnum { position:fixed; left:2rem; bottom:2rem; z-index:100; font-family:'Cinzel',serif;
   font-size:10px; letter-spacing:.3em; color:var(--mu); }
 #pgnum span { color:var(--s); }
@@ -150,7 +158,7 @@ html, body { width:100%; height:100%; overflow:hidden; background:var(--bg); fon
 <div id="vig"></div>
 
 <!-- NAV -->
-<div id="dots"></div>
+<div id="topnav"></div>
 <div id="nav-up" class="nav-arrow" onclick="go(-1)">
   <div class="arr"></div>
   <span>précédent</span>
@@ -255,30 +263,65 @@ html, body { width:100%; height:100%; overflow:hidden; background:var(--bg); fon
 
   <!-- PAGE 4 : PERSONNALITÉ -->
   <div class="page" data-pg="4">
-    <div class="empty-page">
-      <div class="page-title" style="justify-content:center"><span class="pnum">04</span>Personnalité</div>
-      <svg class="ep-icon" viewBox="0 0 60 60" fill="none">
-        <circle cx="30" cy="30" r="22" stroke="#c8a45a" stroke-width="0.8" stroke-dasharray="3 3"/>
-        <path d="M20 30 Q30 20 40 30 Q30 40 20 30Z" stroke="#c8a45a" stroke-width="0.8" fill="none"/>
-      </svg>
-      <div class="ep-title">Section à compléter</div>
-      <div class="ep-text">Traits de caractère, comportements,<br>forces et faiblesses...</div>
-      <div class="ep-border"></div>
+    <div class="p3-inner">
+      <div class="page-title"><span class="pnum">04</span>Personnalité</div>
+      <div class="txt-body">
+        <p>Griff Sabaku est quelqu'un de plutôt <span class="hl">calme et réfléchi</span> pour son âge. Ayant grandi dans le climat aride du désert et dans un clan qui valorise la patience et la maîtrise de soi, il a appris assez tôt à contrôler ses émotions.</p>
+        <p>Griff n'est pas du genre à agir sur un coup de tête. Avant chaque décision, il préfère observer et analyser la situation pour pouvoir réfléchir à comment agir en circonstance.</p>
+        <p>Même s'il peut paraître distant au premier abord, Griff n'est pas quelqu'un de froid. Au contraire, il a simplement du mal à faire confiance rapidement aux autres. Une fois qu'il considère quelqu'un comme un allié ou un ami, il devient <span class="hl">loyal</span> et est prêt à tout pour protéger les personnes qui lui sont importantes.</p>
+        <p>Comme la plupart des membres du clan Sabaku, Griff ressent un lien très fort avec le désert. Il apprécie les moments de solitude dans les dunes, où il peut réfléchir, s'entraîner ou simplement écouter le vent. Ces moments lui permettent de rester concentré et de garder l'esprit clair.</p>
+        <p>Malgré son calme extérieur, Griff possède aussi une grande <span class="hl">détermination</span>. Il sait que porter le nom Sabaku implique des responsabilités, et il ressent une lourde pression pour être à la hauteur de son clan. Cette volonté le pousse à s'entraîner régulièrement et à améliorer constamment son contrôle du sable.</p>
+        <p>Griff n'aime pas particulièrement les conflits inutiles. Il préfère résoudre les situations de manière intelligente plutôt que de foncer dans un combat. Mais si un affrontement devient inévitable, il n'hésitera pas à se battre avec sérieux.</p>
+        <div class="qb">Il ne cherche pas la gloire. Il souhaite surtout devenir un ninja fiable, capable de protéger Sunagakure et de faire honneur à l'héritage de sa famille.</div>
+      </div>
     </div>
   </div>
 
   <!-- PAGE 5 : OBJECTIFS -->
   <div class="page" data-pg="5">
-    <div class="empty-page">
-      <div class="page-title" style="justify-content:center"><span class="pnum">05</span>Objectifs</div>
-      <svg class="ep-icon" viewBox="0 0 60 60" fill="none">
-        <circle cx="30" cy="30" r="22" stroke="#c8a45a" stroke-width="0.8"/>
-        <circle cx="30" cy="30" r="12" stroke="#c8a45a" stroke-width="0.5" stroke-dasharray="2 4"/>
-        <circle cx="30" cy="30" r="3" fill="#c8a45a" opacity="0.4"/>
-      </svg>
-      <div class="ep-title">Section à compléter</div>
-      <div class="ep-text">Ambitions, motivations,<br>raison de rejoindre le clan...</div>
-      <div class="ep-border"></div>
+    <div class="p3-inner">
+      <div class="page-title"><span class="pnum">05</span>Objectifs</div>
+      <div class="txt-body">
+        <p style="font-family:'Cinzel',serif;font-size:9px;letter-spacing:.3em;color:#8a6820;text-transform:uppercase;margin-bottom:.5rem;">Court terme</p>
+        <p>Je veux <span class="hl">trouver des genin</span> avec qui m'entraîner régulièrement dans les dunes. Pas juste pendant les missions officielles, en dehors aussi. Des gens qui n'ont pas peur du soleil ni du sable, qui veulent apprendre à se battre dans le désert et à survivre quand le vent coupe la vision.</p>
+        <p>Je cherche aussi à <span class="hl">passer du temps avec les anciens du clan</span>. Ceux qui connaissent le désert depuis avant ma naissance. J'ai des questions sur le sable, sur Shukaku, sur ce que nos ancêtres ont laissé derrière eux.</p>
+        <p style="font-family:'Cinzel',serif;font-size:9px;letter-spacing:.3em;color:#8a6820;text-transform:uppercase;margin-bottom:.5rem;margin-top:1.2rem;">Moyen terme</p>
+        <p>Il y a des endroits dans le désert que personne ne connaît vraiment. Des ruines, des routes oubliées, des zones que les cartes ne mentionnent pas. Je veux <span class="hl">organiser des expéditions</span> pour les trouver avec d'autres ninjas curieux qui veulent comprendre ce que le Pays du Vent cache encore.</p>
+        <p>Je veux aussi <span class="hl">proposer des entraînements entre clans différents</span>. Chacun reste avec les siens et ça me semble une erreur. On apprend mieux en se frottant à des gens qui combattent autrement que nous.</p>
+        <p style="font-family:'Cinzel',serif;font-size:9px;letter-spacing:.3em;color:#8a6820;text-transform:uppercase;margin-bottom:.5rem;margin-top:1.2rem;">Long terme</p>
+        <p>Un jour, je veux être celui qu'on appelle quand une mission se passe dans le désert et que <span class="hl">personne d'autre ne connaît le terrain</span>. Pas pour la gloire. Juste parce que Sunagakure mérite des shinobi qui connaissent vraiment leur village jusqu'aux dunes les plus lointaines.</p>
+        <div class="qb">Le désert appartient à ceux qui prennent le temps de l'écouter. Je suis prêt à l'écouter avec toi.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- PAGE 6 : REMERCIEMENTS -->
+  <div class="page" data-pg="6">
+    <div class="p0-inner">
+      <div class="p0-ring">
+        <svg width="380" height="380" viewBox="0 0 380 380" fill="none">
+          <circle cx="190" cy="190" r="180" stroke="rgba(200,164,90,0.05)" stroke-width="1"/>
+          <circle cx="190" cy="190" r="155" stroke="rgba(200,164,90,0.04)" stroke-width="1" stroke-dasharray="5 4"/>
+          <circle cx="190" cy="190" r="125" stroke="rgba(200,164,90,0.07)" stroke-width="0.5" stroke-dasharray="2 6"/>
+        </svg>
+      </div>
+      <div class="p0-tag">Fin de candidature</div>
+      <div style="font-family:'Cinzel',serif;font-size:clamp(1.8rem,4vw,3rem);font-weight:900;-webkit-text-stroke:1px #c8a45a;color:transparent;line-height:1.1;letter-spacing:.05em;">
+        Merci pour<br>votre lecture
+      </div>
+      <div style="width:1px;height:50px;background:linear-gradient(to bottom,#8a6820,transparent);margin:.75rem auto;"></div>
+      <div style="font-family:'Crimson Text',serif;font-size:1rem;color:#7a6040;font-style:italic;max-width:380px;line-height:1.8;margin:0 auto;">
+        J'espère que ce dossier vous aura permis de mieux connaître Griff Sabaku et sa vision du monde ninja. Je suis pleinement investi dans ce personnage et dans l'univers du serveur. Ce serait un honneur de rejoindre le clan Sabaku.
+      </div>
+      <div style="width:1px;height:50px;background:linear-gradient(to bottom,transparent,#8a6820);margin:.75rem auto;"></div>
+      <div style="font-family:'Cinzel',serif;font-size:.75rem;letter-spacing:.3em;color:#5a4020;text-transform:uppercase;margin-top:.5rem;">
+        Griff Sabaku · Suna · Genin
+      </div>
+      <div class="badges" style="justify-content:center;margin-top:1.5rem;">
+        <div class="badge"><span>Suna</span></div>
+        <div class="badge"><span>Genin</span></div>
+        <div class="badge"><span>Clan Sabaku</span></div>
+      </div>
     </div>
   </div>
 
@@ -290,7 +333,7 @@ const cur=document.getElementById('cur'), cur2=document.getElementById('cur2');
 let mx=0,my=0,rx=0,ry=0;
 document.addEventListener('mousemove',e=>{mx=e.clientX;my=e.clientY;cur.style.left=mx+'px';cur.style.top=my+'px';});
 (function loopC(){rx+=(mx-rx)*.1;ry+=(my-ry)*.1;cur2.style.left=rx+'px';cur2.style.top=ry+'px';requestAnimationFrame(loopC);})();
-document.querySelectorAll('.badge,.p1-stat,.nav-arrow,.dot').forEach(el=>{
+document.querySelectorAll('.badge,.p1-stat,.nav-arrow,.tnav').forEach(el=>{
   el.addEventListener('mouseenter',()=>{cur2.style.width='52px';cur2.style.height='52px';cur2.style.borderColor='rgba(200,164,90,.7)';});
   el.addEventListener('mouseleave',()=>{cur2.style.width='36px';cur2.style.height='36px';cur2.style.borderColor='rgba(200,164,90,.35)';});
 });
@@ -322,40 +365,80 @@ function drawBg(){
 }
 window.addEventListener('resize',rsz);rsz();drawBg();
 
+/* ── SOUND ── */
+let actx=null;
+function gctx(){if(!actx)actx=new(window.AudioContext||window.webkitAudioContext)();return actx;}
+function playWood(freq=130,vol=.1,dur=.3){
+  try {
+    const c=gctx();
+    const o=c.createOscillator(),g=c.createGain();
+    o.type='sine';o.frequency.setValueAtTime(freq,c.currentTime);
+    o.frequency.exponentialRampToValueAtTime(Math.max(freq*.35,20),c.currentTime+dur);
+    g.gain.setValueAtTime(vol,c.currentTime);g.gain.exponentialRampToValueAtTime(.0001,c.currentTime+dur);
+    o.connect(g);g.connect(c.destination);o.start();o.stop(c.currentTime+dur);
+    const buf=c.createBuffer(1,Math.floor(c.sampleRate*.012),c.sampleRate);
+    const d=buf.getChannelData(0);for(let i=0;i<d.length;i++)d[i]=(Math.random()*2-1);
+    const s=c.createBufferSource();s.buffer=buf;
+    const f=c.createBiquadFilter();f.type='bandpass';f.frequency.value=900;f.Q.value=2;
+    const gs=c.createGain();gs.gain.setValueAtTime(vol*.35,c.currentTime);gs.gain.exponentialRampToValueAtTime(.0001,c.currentTime+.012);
+    s.connect(f);f.connect(gs);gs.connect(c.destination);s.start();s.stop(c.currentTime+.012);
+  } catch(e){}
+}
+
 /* ── PAGES ── */
 const pages=document.querySelectorAll('.page');
 const TOTAL=pages.length;
 let current=0;
+let isAnimating=false;
 
-/* Build dots */
-const dotsEl=document.getElementById('dots');
-for(let i=0;i<TOTAL;i++){const d=document.createElement('div');d.className='dot'+(i===0?' on':'');d.onclick=()=>goTo(i);dotsEl.appendChild(d);}
-document.getElementById('tot-pg').textContent=String(TOTAL).padStart(2,'0');
+const NAMES=['Intro','Identité','Histoire','Apparence','Personnalité','Objectifs','Merci'];
+
+/* Build topnav */
+const topnavEl=document.getElementById('topnav');
+NAMES.forEach((name,i)=>{
+  if(i>0){const sep=document.createElement('div');sep.className='tnav-sep';topnavEl.appendChild(sep);}
+  const t=document.createElement('div');
+  t.className='tnav'+(i===0?' on':'');
+  t.textContent=name;
+  t.onclick=()=>goTo(i);
+  topnavEl.appendChild(t);
+});
+
+const totEl=document.getElementById('tot-pg');
+if(totEl) totEl.textContent=String(TOTAL).padStart(2,'0');
 
 function goTo(n){
-  if(n<0||n>=TOTAL||n===current)return;
+  if(n<0||n>=TOTAL||n===current||isAnimating)return;
+  isAnimating=true;
   const dir=n>current?1:-1;
-  pages[current].classList.remove('active');
-  pages[current].classList.add(dir>0?'exit-up':'exit-down');
-  setTimeout(()=>pages[current].classList.remove('exit-up','exit-down'),800);
+  const prev=current;
+  pages[prev].classList.remove('active');
+  pages[prev].classList.add(dir>0?'exit-up':'exit-down');
   current=n;
   pages[current].classList.add('active');
-  document.querySelectorAll('.dot').forEach((d,i)=>d.classList.toggle('on',i===current));
-  document.getElementById('cur-pg').textContent=String(current+1).padStart(2,'0');
+  document.querySelectorAll('.tnav').forEach((d,i)=>d.classList.toggle('on',i===current));
+  const curPgEl=document.getElementById('cur-pg');
+  if(curPgEl) curPgEl.textContent=String(current+1).padStart(2,'0');
   playWood(current%2===0?140:110,.08,.35);
+  setTimeout(()=>{
+    pages[prev].classList.remove('exit-up','exit-down');
+    isAnimating=false;
+  },850);
 }
 function go(d){goTo(current+d);}
 
 /* Scroll / touch / keys */
 let lastScroll=0;
 window.addEventListener('wheel',e=>{
-  const now=Date.now();if(now-lastScroll<900)return;lastScroll=now;
+  const now=Date.now();if(now-lastScroll<950)return;lastScroll=now;
   go(e.deltaY>0?1:-1);
 },{passive:true});
 let ty=0;
-window.addEventListener('touchstart',e=>{ty=e.touches[0].clientY;},{passive:true});
+window.addEventListener('touchstart',e=>{if(e.touches.length>0)ty=e.touches[0].clientY;},{passive:true});
 window.addEventListener('touchend',e=>{
-  const now=Date.now();if(now-lastScroll<900)return;lastScroll=now;
+  const now=Date.now();if(now-lastScroll<950)return;
+  if(e.changedTouches.length===0)return;
+  lastScroll=now;
   const dy=ty-e.changedTouches[0].clientY;
   if(Math.abs(dy)>40)go(dy>0?1:-1);
 },{passive:true});
@@ -364,23 +447,6 @@ window.addEventListener('keydown',e=>{
   if(e.key==='ArrowUp'||e.key==='ArrowLeft')go(-1);
 });
 
-/* ── SOUND ── */
-let actx=null;
-function gctx(){if(!actx)actx=new(window.AudioContext||window.webkitAudioContext)();return actx;}
-function playWood(freq=130,vol=.1,dur=.3){
-  const c=gctx();
-  const o=c.createOscillator(),g=c.createGain();
-  o.type='sine';o.frequency.setValueAtTime(freq,c.currentTime);
-  o.frequency.exponentialRampToValueAtTime(freq*.35,c.currentTime+dur);
-  g.gain.setValueAtTime(vol,c.currentTime);g.gain.exponentialRampToValueAtTime(.0001,c.currentTime+dur);
-  o.connect(g);g.connect(c.destination);o.start();o.stop(c.currentTime+dur);
-  const buf=c.createBuffer(1,c.sampleRate*.012,c.sampleRate);
-  const d=buf.getChannelData(0);for(let i=0;i<d.length;i++)d[i]=(Math.random()*2-1);
-  const s=c.createBufferSource();s.buffer=buf;
-  const f=c.createBiquadFilter();f.type='bandpass';f.frequency.value=900;f.Q.value=2;
-  const gs=c.createGain();gs.gain.setValueAtTime(vol*.35,c.currentTime);gs.gain.exponentialRampToValueAtTime(.0001,c.currentTime+.012);
-  s.connect(f);f.connect(gs);gs.connect(c.destination);s.start();s.stop(c.currentTime+.012);
-}
 document.querySelectorAll('.badge').forEach((el,i)=>el.addEventListener('click',()=>playWood([200,220,185,240][i%4],.09,.28)));
 document.querySelectorAll('.p1-stat').forEach((el,i)=>el.addEventListener('click',()=>playWood([100,115,90,125][i%4],.1,.38)));
 </script>
