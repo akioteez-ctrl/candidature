@@ -199,7 +199,7 @@ html, body { width:100%; height:100%; overflow:hidden; background:var(--bg); fon
   <div class="page" data-pg="1">
     <div class="p1-inner">
       <div class="p1-left">
-        <img src="https://media.tenor.com/6NmQAH7XVyAAAAAd/gaara-sand.gif" alt="Sand"/>
+        <canvas id="sand-visual" style="width:100%;height:100%;display:block;"></canvas>
         <div class="p1-left-overlay"></div>
         <div class="p1-left-label">
           <div class="lbl">Support visuel</div>
@@ -612,6 +612,122 @@ window.addEventListener('keydown',e=>{
 
 document.querySelectorAll('.badge').forEach((el,i)=>el.addEventListener('click',()=>playWood([200,220,185,240][i%4],.09,.28)));
 document.querySelectorAll('.p1-stat').forEach((el,i)=>el.addEventListener('click',()=>playWood([100,115,90,125][i%4],.1,.38)));
+
+/* ── SABAKU CLAN SYMBOL ── */
+const sv=document.getElementById('sand-visual');
+if(sv){
+  const sc=sv.getContext('2d');
+  let svt=0;
+
+  function drawSV(){
+    const sw=sv.offsetWidth, sh=sv.offsetHeight;
+    if(sv.width!==sw||sv.height!==sh){sv.width=sw;sv.height=sh;}
+    sc.clearRect(0,0,sw,sh);
+    sc.fillStyle='#060402';sc.fillRect(0,0,sw,sh);
+    svt+=.4;
+
+    const cx=sw/2, cy=sh/2;
+    const base=Math.min(sw,sh)*.38;
+    const pulse=Math.sin(svt*.025)*0.04+1;
+    const rot=svt*.004;
+
+    /* Fond radial doux */
+    const bg=sc.createRadialGradient(cx,cy,0,cx,cy,base*1.6);
+    bg.addColorStop(0,'rgba(180,110,20,0.12)');
+    bg.addColorStop(1,'rgba(0,0,0,0)');
+    sc.fillStyle=bg;sc.fillRect(0,0,sw,sh);
+
+    /* Cercle extérieur tournant en pointillés */
+    sc.save();sc.translate(cx,cy);sc.rotate(rot);
+    sc.beginPath();sc.arc(0,0,base*1.35*pulse,0,Math.PI*2);
+    sc.setLineDash([4,6]);sc.strokeStyle='rgba(138,104,32,0.35)';sc.lineWidth=1;sc.stroke();
+    sc.setLineDash([]);sc.restore();
+
+    /* Cercle moyen tournant inversé */
+    sc.save();sc.translate(cx,cy);sc.rotate(-rot*1.5);
+    sc.beginPath();sc.arc(0,0,base*1.1*pulse,0,Math.PI*2);
+    sc.setLineDash([2,8]);sc.strokeStyle='rgba(200,164,90,0.25)';sc.lineWidth=.8;sc.stroke();
+    sc.setLineDash([]);sc.restore();
+
+    /* Cercle intérieur fixe */
+    sc.beginPath();sc.arc(cx,cy,base*.82,0,Math.PI*2);
+    sc.strokeStyle=`rgba(200,164,90,${.18+Math.sin(svt*.03)*.06})`;sc.lineWidth=1;sc.stroke();
+
+    /* Étoile à 5 branches (étoile du désert) */
+    sc.save();sc.translate(cx,cy);sc.rotate(rot*.5-Math.PI/2);
+    sc.beginPath();
+    for(let i=0;i<5;i++){
+      const a1=i*Math.PI*2/5;
+      const a2=(i+.5)*Math.PI*2/5;
+      const ox=Math.cos(a1)*base*.75*pulse;
+      const oy=Math.sin(a1)*base*.75*pulse;
+      const ix=Math.cos(a2)*base*.32*pulse;
+      const iy=Math.sin(a2)*base*.32*pulse;
+      if(i===0)sc.moveTo(ox,oy);else sc.lineTo(ox,oy);
+      sc.lineTo(ix,iy);
+    }
+    sc.closePath();
+    sc.strokeStyle=`rgba(200,164,90,${.45+Math.sin(svt*.02)*.1})`;sc.lineWidth=1.2;sc.stroke();
+    sc.fillStyle=`rgba(200,164,90,${.06+Math.sin(svt*.02)*.02})`;sc.fill();
+    sc.restore();
+
+    /* Traits radiaux sur l'étoile */
+    sc.save();sc.translate(cx,cy);sc.rotate(rot*.5-Math.PI/2);
+    for(let i=0;i<5;i++){
+      const a=i*Math.PI*2/5;
+      sc.beginPath();
+      sc.moveTo(Math.cos(a)*base*.32*pulse,Math.sin(a)*base*.32*pulse);
+      sc.lineTo(Math.cos(a)*base*.75*pulse,Math.sin(a)*base*.75*pulse);
+      sc.strokeStyle='rgba(200,164,90,0.15)';sc.lineWidth=.5;sc.stroke();
+    }
+    sc.restore();
+
+    /* Croissant de lune en bas (symbole désert) */
+    sc.save();sc.translate(cx,cy+base*.1);
+    const cm=base*.18*pulse;
+    sc.beginPath();sc.arc(0,0,cm,Math.PI*.15,Math.PI*.85);
+    sc.strokeStyle=`rgba(232,201,122,${.5+Math.sin(svt*.02)*.15})`;sc.lineWidth=1.5;sc.stroke();
+    sc.restore();
+
+    /* Point central pulsant */
+    const glow=sc.createRadialGradient(cx,cy,0,cx,cy,base*.12);
+    glow.addColorStop(0,`rgba(240,210,120,${.7+Math.sin(svt*.04)*.3})`);
+    glow.addColorStop(.4,`rgba(200,164,90,${.3+Math.sin(svt*.04)*.1})`);
+    glow.addColorStop(1,'rgba(0,0,0,0)');
+    sc.beginPath();sc.arc(cx,cy,base*.12,0,Math.PI*2);
+    sc.fillStyle=glow;sc.fill();
+
+    /* Petits points orbitaux */
+    for(let i=0;i<8;i++){
+      const a=svt*.015+i*Math.PI*2/8;
+      const r=base*1.35;
+      const px=cx+Math.cos(a)*r;
+      const py=cy+Math.sin(a)*r;
+      const pa=.15+Math.sin(svt*.04+i)*.1;
+      sc.beginPath();sc.arc(px,py,1.2,0,Math.PI*2);
+      sc.fillStyle=`rgba(200,164,90,${pa})`;sc.fill();
+    }
+
+    /* Particules de sable légères */
+    if(!sv._pts){
+      sv._pts=Array.from({length:40},()=>({
+        x:Math.random()*sw,y:Math.random()*sh,
+        vx:Math.random()*.4+.1,vy:(Math.random()-.5)*.2,
+        r:Math.random()*.8+.2,a:Math.random()*.3+.05,
+        col:['#c8a45a','#e8c97a','#8a6820'][Math.floor(Math.random()*3)]
+      }));
+    }
+    for(const p of sv._pts){
+      p.x+=p.vx;p.y+=p.vy;
+      if(p.x>sw+5)p.x=-5;
+      sc.beginPath();sc.arc(p.x,p.y,p.r,0,Math.PI*2);
+      sc.fillStyle=p.col;sc.globalAlpha=p.a;sc.fill();sc.globalAlpha=1;
+    }
+
+    requestAnimationFrame(drawSV);
+  }
+  drawSV();
+}
 </script>
 </body>
 </html>
